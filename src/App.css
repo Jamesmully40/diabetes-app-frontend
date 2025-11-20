@@ -36,3 +36,37 @@
     transform: rotate(360deg);
   }
 }
+
+/* Responsive tweaks for small devices */
+@media (max-width: 576px) {
+  .container {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .card {
+    padding: 12px;
+  }
+
+  .card .form-control {
+    font-size: 0.95rem;
+  }
+
+  .list-group-item {
+    font-size: 0.95rem;
+    padding: 0.65rem;
+  }
+
+  .navbar-brand {
+    font-size: 1rem;
+  }
+
+  h2, h4, h5 {
+    font-size: 1.05rem;
+  }
+}
+
+/* Ensure long recommendation text wraps nicely */
+.recommendation {
+  word-wrap: break-word;
+}

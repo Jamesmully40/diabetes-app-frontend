@@ -1,15 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const Login = () => {
-  const [formData, setFormData] = useState({
-    email: '',
-    password: ''
-  });
-  const [error, setError] = useState('');
+const Register = () => {
+  const [formData, setFormData] = useState({ name: '', email: '', password: '' });
   const navigate = useNavigate();
+  const [error, setError] = useState('');
 
-  const { email, password } = formData;
+  const { name, email, password } = formData;
 
   const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
 
@@ -17,14 +14,14 @@ const Login = () => {
     e.preventDefault();
     try {
       setError('');
-      const res = await fetch('http://localhost:5000/api/auth/login', {
+      const res = await fetch('http://localhost:5000/api/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password })
+        body: JSON.stringify({ name, email, password })
       });
       const data = await res.json();
       if (!res.ok) {
-        setError(data.msg || data.error || 'Login failed');
+        setError(data.msg || data.error || 'Registration failed');
         return;
       }
       if (data.token) {
@@ -32,8 +29,8 @@ const Login = () => {
       }
       navigate('/dashboard');
     } catch (err) {
-      console.error('Login error', err);
-      setError('Login failed — please try again');
+      console.error('Register error', err);
+      setError('Registration failed — please try again');
     }
   };
 
@@ -43,32 +40,22 @@ const Login = () => {
         <div className="col-md-6 mx-auto">
           <div className="card">
             <div className="card-body">
-              <h2 className="text-center">Login</h2>
+              <h2 className="text-center">Register</h2>
               <form onSubmit={onSubmit}>
                 {error && <div className="alert alert-danger">{error}</div>}
                 <div className="form-group">
+                  <label>Name</label>
+                  <input type="text" className="form-control" name="name" value={name} onChange={onChange} required />
+                </div>
+                <div className="form-group">
                   <label>Email</label>
-                  <input
-                    type="email"
-                    className="form-control"
-                    name="email"
-                    value={email}
-                    onChange={onChange}
-                    required
-                  />
+                  <input type="email" className="form-control" name="email" value={email} onChange={onChange} required />
                 </div>
                 <div className="form-group">
                   <label>Password</label>
-                  <input
-                    type="password"
-                    className="form-control"
-                    name="password"
-                    value={password}
-                    onChange={onChange}
-                    required
-                  />
+                  <input type="password" className="form-control" name="password" value={password} onChange={onChange} required />
                 </div>
-                <button type="submit" className="btn btn-primary btn-block">Login</button>
+                <button type="submit" className="btn btn-primary btn-block">Register</button>
               </form>
             </div>
           </div>
@@ -78,4 +65,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;
