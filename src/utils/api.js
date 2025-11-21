@@ -32,5 +32,4 @@ async function post(path, body) {
   if (!res.ok) throw data;
   return data;
 }
-
 export default { get, post, getToken };
